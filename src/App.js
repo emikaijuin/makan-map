@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import './App.css';
-
-// Components
-import Navbar from '../components/Navbar.js'
+import React, { Component } from "react";
+import "./App.css";
+import Nav from "./containers/Nav";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-      <Navbar />
-        <header className="App-header">
-          Makan Map
-        </header>
+        <Nav />
+        <header className="App-header">Makan Map</header>
       </div>
     );
   }
