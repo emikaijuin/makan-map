@@ -14,7 +14,6 @@ class SignUpModal extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    console.log(this.state);
     axios
       .post("http://localhost:3001/api/v1/users", {
         user: {
@@ -29,7 +28,7 @@ class SignUpModal extends Component {
             }
           })
           .then(result => {
-            localStorage.set("auth_token", result.data.jwt);
+            localStorage.setItem("auth_token", result.data.jwt);
           });
       })
       .catch(error => {
