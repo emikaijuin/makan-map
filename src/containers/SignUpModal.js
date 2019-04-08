@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dialog, Input } from "@material-ui/core";
 import axios from "axios";
+import UserAuth from "../helpers/UserAuth";
 
 class SignUpModal extends Component {
   state = {
@@ -21,15 +22,11 @@ class SignUpModal extends Component {
         }
       })
       .then(result => {
-        axios
-          .post("http://localhost:3001/api/v1/user_token", {
-            auth: {
-              ...this.state.user
-            }
-          })
-          .then(result => {
-            localStorage.setItem("auth_token", result.data.jwt);
-          });
+        UserAuth.signIn({
+          email: this.state.user.email,
+          password: this.state.user.password
+        });
+        this.props.userSignedIn();
       })
       .catch(error => {
         console.log(error);
@@ -80,7 +77,7 @@ class SignUpModal extends Component {
             />
           </div>
           <div>
-            <Input type="submit">Click me!</Input>
+            <Input type="submit">Sign Up</Input>
           </div>
         </form>
       </Dialog>
