@@ -31,7 +31,7 @@ class Nav extends Component {
 
   render() {
     return (
-      <AppBar>
+      <AppBar style={{ color: "white" }}>
         {this.state.userSignedIn ? (
           <Button onClick={this.userSignedOut}>Log Out</Button>
         ) : (
