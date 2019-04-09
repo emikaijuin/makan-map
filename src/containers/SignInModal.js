@@ -12,8 +12,7 @@ class SignInModal extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    UserAuth.signIn(this.state.user);
-    this.props.userSignedIn();
+    UserAuth.signIn(this.state.user, this.props.userSignedIn);
   };
 
   handleInputChange = event => {
