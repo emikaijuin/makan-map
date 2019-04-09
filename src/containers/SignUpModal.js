@@ -30,10 +30,9 @@ class SignUpModal extends Component {
           },
           this.props.userSignedIn
         );
-        this.props.updateUserSignedIn();
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
