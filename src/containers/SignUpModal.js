@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Dialog, Input } from "@material-ui/core";
 import axios from "axios";
 import UserAuth from "../helpers/UserAuth";
+import humps from "humps";
 
 class SignUpModal extends Component {
   state = {
@@ -18,15 +19,18 @@ class SignUpModal extends Component {
     axios
       .post("http://localhost:3001/api/v1/users", {
         user: {
-          ...this.state.user
+          ...humps.decamelizeKeys(this.state.user)
         }
       })
       .then(result => {
-        UserAuth.signIn({
-          email: this.state.user.email,
-          password: this.state.user.password
-        });
-        this.props.userSignedIn();
+        UserAuth.signIn(
+          {
+            email: this.state.user.email,
+            password: this.state.user.password
+          },
+          this.props.userSignedIn
+        );
+        this.props.updateUserSignedIn();
       })
       .catch(error => {
         console.log(error);
