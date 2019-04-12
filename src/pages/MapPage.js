@@ -49,7 +49,7 @@ class MapPage extends Component {
     return (
       <GoogleMapReact
         style={{ width: "100%", height: "100vh" }}
-        bootstrapURLKeys={{ key: "AIzaSyBUDWlXGgvD6lw5j-afntTLx5cdRGmV_3c" }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
         defaultCenter={{ lat: 59.95, lng: 30.33 }}
         zoom={11}
         onGoogleApiLoaded={this.handleMapChange}
