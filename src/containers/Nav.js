@@ -3,6 +3,7 @@ import { AppBar, Button } from "@material-ui/core";
 import SignInModal from "./SignInModal";
 import SignUpModal from "./SignUpModal";
 import NewListingForm from "./NewListingForm";
+import UserSearchForm from "./UserSearchForm";
 
 class Nav extends Component {
   state = {
@@ -43,6 +44,9 @@ class Nav extends Component {
             <Button onClick={this.showSignUp}>Sign Up</Button>
           </div>
         )}
+        <div>
+          <UserSearchForm />
+        </div>
 
         <SignUpModal
           isOpen={this.state.showSignUp}
