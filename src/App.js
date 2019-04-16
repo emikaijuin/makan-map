@@ -22,7 +22,7 @@ class App extends Component {
     navigator.geolocation.getCurrentPosition(result => {
       const coords = {
         lat: result.coords.latitude,
-        long: result.coords.longitude
+        lng: result.coords.longitude
       };
       this.setState({ center: coords });
     });
