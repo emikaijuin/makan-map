@@ -5,57 +5,51 @@ import axios from "axios";
 
 class MapPage extends Component {
   state = {
-    center: {
-      lat: "42.3564",
-      long: "-71.0617"
-    },
     currentBounds: {}
   };
 
-  componentDidMount() {
-    navigator.geolocation.getCurrentPosition(result => {
-      const coords = {
-        lat: result.coords.latitude,
-        long: result.coords.longitude
-      };
-      this.updateCenterCoords(coords);
-    });
-  }
-
   handleMapChange = result => {
+    console.log(this.state);
     this.updateBoundaryCoords(result);
-    this.retrieveMarkers();
+    this.retrieveListings();
   };
 
-  retrieveMarkers = () => {
+  retrieveListings = () => {
     axios
       .get("http://localhost:3001/api/v1/listings", {
         params: { bounds: { ...this.state.currentBounds } }
       })
       .then(result => {
-        console.log(result);
+        this.setState({ listings: Object.values(result.data) });
       });
-  };
-
-  updateCenterCoords = coords => {
-    this.setState({ center: coords });
   };
 
   updateBoundaryCoords = result => {
     this.setState({ currentBounds: result.bounds });
   };
 
+  returnPinDrops = () =>
+    this.state.listings.map(listing => {
+      return (
+        <PinDrop
+          lat={listing.latitude}
+          lng={listing.longitude}
+          style={{ zIndex: "1" }}
+        />
+      );
+    });
+
   render() {
     return (
       <GoogleMapReact
         style={{ width: "100%", height: "100vh" }}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }}
-        defaultCenter={{ lat: 59.95, lng: 30.33 }}
-        zoom={11}
+        center={{ lat: this.props.center.lat, lng: this.props.center.lng }}
+        zoom={15}
         onGoogleApiLoaded={this.handleMapChange}
         onChange={this.handleMapChange}
       >
-        <PinDrop lat={42.3564} lng={-71.0617} />
+        {this.state.listings ? this.returnPinDrops() : function() {}}
       </GoogleMapReact>
     );
   }
