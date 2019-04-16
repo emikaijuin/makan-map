@@ -5,7 +5,8 @@ import MapPage from "./pages/MapPage";
 
 class App extends Component {
   state = {
-    userIsSignedIn: !!localStorage.getItem("auth_token")
+    userIsSignedIn: !!localStorage.getItem("auth_token"),
+    center: {}
   };
 
   userSignedIn = () => {
@@ -17,6 +18,16 @@ class App extends Component {
     this.setState({ userSignedIn: false });
   };
 
+  componentDidMount = () => {
+    navigator.geolocation.getCurrentPosition(result => {
+      const coords = {
+        lat: result.coords.latitude,
+        long: result.coords.longitude
+      };
+      this.setState({ center: coords });
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -26,7 +37,7 @@ class App extends Component {
           userSignedOut={this.userSignedOut}
         />
         {this.state.userIsSignedIn ? (
-          <MapPage />
+          <MapPage center={this.state.center} />
         ) : (
           <header className="App-header">Makan Map</header>
         )}
